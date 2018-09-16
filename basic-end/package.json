@@ -1,0 +1,14 @@
+{
+  "name": "basic-end",
+  "version": "1.0.0",
+  "description": "where is toilt",
+  "main": "study",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "evel",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
