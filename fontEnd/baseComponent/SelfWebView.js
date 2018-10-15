@@ -11,6 +11,9 @@ export default class SelfWebView extends Component {
     _showError = () => {
         this.setState({isError: true})
     }
+    _noFun = () => {
+        console.log('noFun')
+    }
     render () {
         return (
             <View style={styles.container} > 
@@ -18,9 +21,11 @@ export default class SelfWebView extends Component {
                     this.state.isError ?   
                     <View style={styles.errInfo}><Text style={styles.text}>网络错误，请检查你的网络</Text></View> 
                     :
-                    <WebView source={{uri: this.state.url}} 
+                    <WebView 
+                        source={this.props.url}
                         onError = {this._showError}
                         startInLoadingState = {true}
+                        injectedJavaScript = {this.props.injectedJavaScript ? this.props.injectedJavaScript() : this._noFun()}
                     />
                 }
               

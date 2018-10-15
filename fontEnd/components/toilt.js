@@ -6,8 +6,8 @@ export default class toilt  extends React.Component {
     render () {
         return (
             <View style={styles.container}>
-                <Text>this is toilt page </Text>
-                <SelfWebView url="../html/nearby.html"></SelfWebView>
+                {/* <Text>this is toilt page </Text> */}
+                <SelfWebView url={require('../html/nearby.html')}></SelfWebView>
                 <MapView
                 coordinate={{
                     latitude: 39.91095,
