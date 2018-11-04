@@ -1,13 +1,8 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 // import Icon  from 'react-native-vector-icons/FontAwesome';
 // import IconAD  from 'react-native-vector-icons/AntDesign';
-import { createBottomTabNavigator } from 'react-navigation';
-import reading from './components/reading'
-import toilt from './components/toilt'
-import setting from './components/setting'
-import climate from './components/climate'
+import { createStackNavigator } from 'react-navigation';
+import RootStack from './routeConfig'
 /*
 class HomeScreen extends React.Component {
   render() {
@@ -37,56 +32,4 @@ class SettingsScreen extends React.Component {
 */
 
 
-export default createBottomTabNavigator(
-  {
-    Reading: reading,
-    Toilt: toilt,
-    Setting: setting,
-    Climate: climate,
-  },
-  {
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === 'Reading') {
-          iconName = `ios-mail-unread${focused ? '' : ''}`;
-        } else if (routeName === 'Setting') {
-          iconName = `ios-settings${focused ? '' : ''}`;
-        } else if (routeName === 'Toilt') {
-          iconName = `md-woman${focused ? '' : ''}`;
-        }  else if (routeName === 'Climate') {
-          iconName = `ios-cloudy-night${focused ? '' : ''}`;
-        } 
-        // You can return any component that you like here! We usually use an
-        // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={horizontal ? 20 : 25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: '#4BC1D2',
-      inactiveTintColor: '#000',
-      showIcon: true,
-      showLabel: true,
-      upperCaseLabel: false,
-      pressColor: '#788493',
-      pressOpacity: 0.8,
-      style: {
-          backgroundColor: '#fff',
-          paddingBottom: 0,
-          borderTopWidth: 0.5,
-          borderTopColor: '#ccc',
-      },
-      labelStyle: {
-          fontSize: 12,
-          margin: 1
-      },
-      indicatorStyle: {height: 0},
-    },
-    tabBarPosition: 'bottom',
-    swipeEnabled: true,
-    animationEnabled: false,
-    lazy: true,
-    backBehavior: 'none',
-  }
-);
+export default createStackNavigator(RootStack.rootScreen, RootStack.rootConfig);

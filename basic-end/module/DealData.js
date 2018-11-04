@@ -7,13 +7,13 @@ const DealDate = {
         var resObj = {}
         return new Promise((resolve, reject) => {
             fs.readFile(PATH + type + ".json", (err, data) => {
-                if (err) {
-                    resObj = {
-                        status: 0,
-                        info: '读取文件失败'
-                    }
-                    return resolve(resObj)
-                }
+                // if (err) {
+                //     resObj = {
+                //         status: 0,
+                //         info: '读取文件失败'
+                //     }
+                //     return resolve(resObj)
+                // }
                 try {
                     var obj = JSON.parse(data.toString())
                 } catch(e) {

@@ -7,6 +7,11 @@ const basicRouter = require('./routers')
 const dataRouter = require('./routers/data')
 const loginRouter = require('./routers/login')
 var session = require('express-session')
+ 
+var cors  = require('cors')
+var corsConfig = require('./config/corsConfig')
+app.options('*',cors(corsConfig))
+app.all('*', cors(corsConfig));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

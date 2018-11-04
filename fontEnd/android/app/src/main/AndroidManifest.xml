@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fontend">
+    package="com.wheretoit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -22,9 +22,5 @@
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
-    <application>
-      <meta-data
-        android:name="com.amap.api.v2.apikey"
-        android:value="983ad7e02d317aafa2f59f3ab317dc0f" />
-    </application>
+
 </manifest>

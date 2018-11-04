@@ -31,11 +31,34 @@
                 left: 64px !important;
                 bottom: 19px !important;
             }
+            #tip {
+                background-color: #ddf;
+                color: #333;
+                border: 1px solid silver;
+                box-shadow: 3px 4px 3px 0px silver;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                border-radius: 5px;
+                overflow: hidden;
+                line-height: 20px;
+            }
+            #tip input[type="text"] {
+                height: 25px;
+                border: 0;
+                padding-left: 5px;
+                width: 280px;
+                border-radius: 3px;
+                outline: none;
+            }
         </style>
     </head>
     <body>
         <!-- <div><img src='../images/location.png'/></div> -->
         <div id="container"></div> 
+        <div id="tip">
+            <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+        </div>
     </body>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=983ad7e02d317aafa2f59f3ab317dc0f"></script> 
     <script>
@@ -54,6 +77,20 @@
             map.addControl(scale);
         })
 
+        var onComplete = function (data) {
+            map.clearMap()
+            if (data.info === 'SUCCESS' && data.type === 'complete') {
+                var pos = data.position
+                _search(pos)
+
+            } else {
+                alert('调用地图服务错误或者没有数据')
+            }
+        }
+        var onError = function () {
+            alert('定位失败，请在手机上开启定位：设置->隐私->定位服务->厕所在哪->使用期间 打开')
+        }
+
         map.plugin('AMap.Geolocation', function () {
             var geolocation = new AMap.Geolocation({
                     enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -70,9 +107,54 @@
                     // bottonDom: locationIcon
                 });
                 map.addControl(geolocation);
+                geolocation.getCurrentPosition();
             geolocation.getCurrentPosition();
-            map.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
-            map.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+            AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
         });
+
+        // 点击market展示详细信息，以及路线规划导航
+        
+        // 搜索功能
+        function _search (cpoint) {
+            AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+                var autoOptions = {
+                    city: "北京", //城市，默认全国
+                    input: "keyword"//使用联想输入的input的id
+                };
+                autocomplete= new AMap.Autocomplete(autoOptions);
+                var placeSearch = new AMap.PlaceSearch({
+                        // city:'北京',
+                        map:map,
+                        pageSize: 10,
+                        pageIndex: 1
+                })
+                placeSearch.searchNearBy('超市', cpoint, 2000, function(status, result) {
+                        if (result.info === 'OK' && status === 'complete') {
+                            var pois = result.poiList.pois
+                            console.log(pois)
+                        }
+                });
+                /*
+                AMap.event.addListener(autocomplete, "select", function(e){
+                    //TODO 针对选中的poi实现自己的功能
+                    // placeSearch.setCity(e.poi.adcode);
+                    // placeSearch.search(e.poi.name)
+                    var _cpoint = [cpoint.lat, cpoint.lng]; //中心点坐标
+                    placeSearch.searchNearBy(e.poi.name, cpoint, 2000, function(status, result) {
+                        if (result.info === 'OK' && status === 'complete') {
+                            var pois = result.poiList.pois
+                            console.log(pois)
+                        }
+                    });
+                });
+                */
+            });
+        }
+        document.querySelector("a.amap-logo").addEventListener("click",function (e) {
+            e.preventDefault();
+            return false;
+        })        
+        
     </script>
 </html>
